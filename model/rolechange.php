@@ -13,5 +13,5 @@ $stmt->execute();
 $stmt->close();
 $conn->close();
 
-echo "<script type='text/javascript'>window.location.href='../view/admin.php';</script>";
+echo "<script type='text/javascript'>window.location.href='../view/grantpriv.php';</script>";
 ?>

@@ -4,7 +4,7 @@ Mansoor Baba Shaik
 */
 require_once('../model/userDetails.php');
 $currentyear = date("Y");
-echo '<br/><br/><script type="text/javascript" src="../js/toggle.js"></script>';
+echo '<br/><br/><script type="text/javascript" src="../js/toggle.js"></script></script><script type="text/javascript" src="../js/skills.js"></script>';
 echo '<div class="form-group">
         <form name="editprofile" action="../model/editprofile.php" method="post" enctype="multipart/form-data" autocomplete="off">
          <fieldset>
@@ -20,6 +20,7 @@ echo '<div class="form-group">
                     <td>'.$dbLName.'</td>
                 </tr>
                 <tr><td><br/></td></tr>
+                <input type="hidden" id="userID" value="'.$_SESSION['uid'].'" />
                 <tr>
                     <td><label>UID: </label></td>
                     <td>'.$_SESSION['uid'].'</td>
@@ -151,6 +152,15 @@ echo   '</select>
                     <td><a href="'.$uFileLocation.'" target="_blank">'.$uResOrgName.'</a></td>
                 </tr>
                 <tr><td><br/></td></tr>
+                <tr>
+                <td><label>Skills: </label></td>
+                <td><input style="text-transform:uppercase;" type="text" name="skillset" id="skills" value="" onkeyup="findSkills();"/>
+                <input type="button" id="addSkill" name="addSkills" value="Add Skill" onclick="insertSkill();" /></td>
+                </tr>
+                <tr><td><br/></td></tr>
+                <tr><td></td><td><h4 id="displaySkills"></h4></td></tr>
+                <tr><td><br/></td></tr>
+                <tr><td><br/></td></tr>
                 <tr><td><br/></td></tr>
                 <tr>
                     <td></td>
@@ -173,3 +183,18 @@ echo   '</select>
       </form>
      </div>';
 ?>
+
+
+<script type='text/javascript'>
+    <?php
+    if(!Empty($uSkills)){
+        echo  'var js_uSkills = [];
+                js_uSkills ='.json_encode($uSkills).';
+                skillsPosted = js_uSkills;getItDone();';
+    }
+    else{
+        echo 'skillsPosted=[];';
+    }
+
+    ?>
+</script>

@@ -5,6 +5,8 @@ Mansoor Baba Shaik
 session_start();
 require_once('config.php');
 
+date_default_timezone_set("America/New_York");
+$today = date("Y-m-d H:i:s");
 $UID = trim($_SESSION['uid']);
 $PhoneNum = trim($_POST['pnum']);
 $AdmitTerm = trim($_POST['admitterm']);
@@ -38,10 +40,10 @@ $AWA = trim($_POST['awa']);
 
 $stmt = $conn->prepare("UPDATE UserProfile SET PhoneNum=?, AdmitTerm=?, AdmitYear=?,
                         CurrentTerm=?, CurrentYear=?, Campus=?, School=?, Program=?, GPA=?, En=?,
-                        IELTS=?, TOEFL=?, GRE=?, Quant=?, Verb=?, AWA=?, LastEdited=CURRENT_TIMESTAMP
+                        IELTS=?, TOEFL=?, GRE=?, Quant=?, Verb=?, AWA=?, LastEdited=?
                         WHERE UID=?");
-$stmt->bind_param("ssisisisdsdiiiids", $PhoneNum, $AdmitTerm, $AdmitYear, $CurrentTerm, $CurrentYear,
-    $Campus, $School, $Program, $GPA, $En, $IELTS, $TOEFL, $GRE, $Quant, $Verb, $AWA, $UID);
+$stmt->bind_param("ssisisisdsdiiiidss", $PhoneNum, $AdmitTerm, $AdmitYear, $CurrentTerm, $CurrentYear,
+    $Campus, $School, $Program, $GPA, $En, $IELTS, $TOEFL, $GRE, $Quant, $Verb, $AWA, $today, $UID);
 $stmt->execute();
 $stmt->close();
 

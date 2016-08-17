@@ -13,12 +13,23 @@ if($_SESSION['loggedin']=='yes'&&($_SESSION['role']=='1' || $_SESSION['role']=='
         </div>
         <ul class="nav navbar-nav">';
          if($_SESSION['role']=="1"){
-                    echo   '<li><a href="home.php">Home</a></li>
+                    echo '<li><a href="home.php">Home</a></li>
                             <li class="active"><a href="postjobs.php">Post a Job</a></li>
                             <li><a href="manageposts.php">Manage Posts</a></li>
                             <li><a href="applicants.php">Received Applications</a></li>
-                            <li><a href="admin.php">Administrator</a></li>';
-                }
+                            <li><a href="#" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Administrator
+                            <span class="caret"></span>
+                            </a>       
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="grantpriv.php">Manage Users</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            </ul>
+                            </li>';
+            }
                 elseif($_SESSION['role']=="5"){
                     echo   '<li><a href="home.php">Home</a></li>
                             <li class="active"><a href="postjobs.php">Post a Job</a></li>

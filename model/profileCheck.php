@@ -4,7 +4,7 @@ Mansoor Baba Shaik
 */
 require_once('config.php');
 $uid = $_SESSION['uid'];
-$query = "SELECT LastEdited FROM UserProfile WHERE UID=UPPER('$uid')";
+$query = "SELECT DATE_FORMAT(LastEdited,'%d-%b-%Y %h:%i %p') FROM UserProfile WHERE UID=UPPER('$uid')";
 $result = mysqli_query($conn,$query);
 $lastedited = mysqli_fetch_row($result);
 $_SESSION['lastedited'] = $lastedited[0];

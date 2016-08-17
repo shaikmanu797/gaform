@@ -5,6 +5,8 @@ Mansoor Baba Shaik
 session_start();
 $email = trim($_POST['emailid']);
 $pwd = trim($_POST['pwd']);
+date_default_timezone_set("America/New_York");
+$today = date("Y-m-d H:i:s");
 
 require_once('config.php');
 
@@ -33,20 +35,20 @@ if(password_verify($pwd,$unhashpwd)){
     $_SESSION['loggedin']='yes';
 
     //Track user activity to store last login activity
-    $query = "SELECT LastLogin FROM UserActivity WHERE UID=UPPER('$uid')";
+    $query = "SELECT DATE_FORMAT(LastLogin,'%d-%b-%Y %h:%i %p') FROM UserActivity WHERE UID=UPPER('$uid')";
     $result = mysqli_query($conn,$query);
     $lastlogin = mysqli_fetch_row($result);
     $_SESSION['lastlogin'] = $lastlogin[0];
 
     if(mysqli_num_rows($result)==0){
-        $stmt = $conn->prepare("INSERT INTO UserActivity(UID,RandomKey,LastLogin) VALUES(?,?,CURRENT_TIMESTAMP)");
-        $stmt->bind_param("ss",$_SESSION['uid'],$_SESSION['random']);
+        $stmt = $conn->prepare("INSERT INTO UserActivity(UID,RandomKey,LastLogin) VALUES(?,?,?)");
+        $stmt->bind_param("sss",$_SESSION['uid'],$_SESSION['random'],$today);
         $stmt->execute();
         $stmt->close();
     }
     else{
-        $stmt = $conn->prepare("UPDATE UserActivity SET RandomKey=?,LastLogin=CURRENT_TIMESTAMP WHERE UID=?");
-        $stmt->bind_param("ss",$_SESSION['random'],$_SESSION['uid']);
+        $stmt = $conn->prepare("UPDATE UserActivity SET RandomKey=?,LastLogin=? WHERE UID=?");
+        $stmt->bind_param("sss",$_SESSION['random'],$today,$_SESSION['uid']);
         $stmt->execute();
         $stmt->close();
     }
